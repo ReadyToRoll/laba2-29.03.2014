@@ -5,40 +5,39 @@ import java.util.Random;
 
 public class Run {
 
-	public static void hello(int type_phrase, Replica welcome,
-			Temperament first, Temperament second) {
-		type_phrase = first.analyzing();
-		System.out.println("Первый говорит:");
-		welcome.say(type_phrase);
-		second.changeStatement(type_phrase);
-		type_phrase = second.analyzing();
-		System.out.println("А второй ему:");
-		welcome.say(type_phrase);
-		first.changeStatement(type_phrase);
+	public static int rand_value() {
+		Random rand = new Random();
+		return rand.nextInt(3);
 	}
 
-	public static void question_answer(int type_phrase, Replica question,
-			Replica answer, Temperament first, Temperament second) {
-		type_phrase = first.analyzing();
-		System.out.println("Первый говорит:");
-		question.say(type_phrase);
-		second.changeStatement(type_phrase);
-		type_phrase = second.analyzing();
-		System.out.println("А второй ему:");
-		answer.say(type_phrase);
-		first.changeStatement(type_phrase);
+	public static void hello(Temperament first, Temperament second,
+			Replica phrase_first, Replica phrase_second) {
+		phrase_first = new Welcome(0, first.analyzing() - 1, rand_value());
+		phrase_first.say();
+		second.changeStatement(first.analyzing());
+		phrase_second = new Welcome(0, second.analyzing() - 1, rand_value());
+		phrase_second.say();
+		first.changeStatement(second.analyzing());
 	}
 
-	public static void phrase(int type_phrase, Replica phrase,
-			Temperament first, Temperament second) {
-		type_phrase = first.analyzing();
-		System.out.println("Первый говорит:");
-		phrase.say(type_phrase);
-		second.changeStatement(type_phrase);
-		type_phrase = second.analyzing();
-		System.out.println("А второй ему:");
-		phrase.say(type_phrase);
-		first.changeStatement(type_phrase);
+	public static void question_answer(Temperament first, Temperament second,
+			Replica phrase_first, Replica phrase_second) {
+		phrase_first = new Question(2, first.analyzing() - 1, rand_value());
+		phrase_first.say();
+		second.changeStatement(first.analyzing());
+		phrase_second = new Answer(3, second.analyzing() - 1, rand_value());
+		phrase_second.say();
+		first.changeStatement(second.analyzing());
+	}
+
+	public static void phrase(Temperament first, Temperament second,
+			Replica phrase_first, Replica phrase_second) {
+		phrase_first = new Phrase(1, first.analyzing() - 1, rand_value());
+		phrase_first.say();
+		second.changeStatement(first.analyzing());
+		phrase_second = new Phrase(1, second.analyzing() - 1, rand_value());
+		phrase_second.say();
+		first.changeStatement(second.analyzing());
 	}
 
 	public static void main(String[] args) throws InterruptedException {
@@ -47,8 +46,8 @@ public class Run {
 		int melancholiac[] = { 2, 2, 4, 4, 3, 2 };
 		int phlegmatic[] = { 2, 2, 2, 2, 2, 2 };
 		int happy[] = { 10, -10, 5, -5 };
-		int kind[] = { -10, 10, -5, 5 };
-		int sad[] = { 5, -5, 10, -10 };
+		int sad[] = { -10, 10, -5, 5 };
+		int kind[] = { 5, -5, 10, -10 };
 		int ang[] = { -5, 5, -10, 10 };
 		Temperament first = null, second = null;
 		boolean ch = true;
@@ -176,105 +175,29 @@ public class Run {
 		System.out.println("4 - Злой");
 		System.out.println("(Ввести число от 1 до 4)");
 		j = inp.nextInt();
+		int[] mood= null;
+		switch(j){
+		case 1: mood=happy;
+		case 2: mood=sad;
+		case 3: mood=kind;
+		case 4: mood=ang;
+		}
+		
 		switch (i) {
-		case 1: {
-			switch (j) {
-			case 1: {
-				second = new Sanguine(sanguine, happy);
-			}
-				break;
-			case 2: {
-				second = new Sanguine(sanguine, sad);
-			}
-				break;
-			case 3: {
-				second = new Sanguine(sanguine, kind);
-			}
-				break;
-			case 4: {
-				second = new Sanguine(sanguine, ang);
-			}
-				break;
-			}
+			case 1: {second = new Sanguine(sanguine, mood);} break;
+			case 2: {second = new Sanguine(sanguine, mood);} break;
+			case 3: {second = new Sanguine(sanguine, mood);} break;
+			case 4: {second = new Sanguine(sanguine, mood);} break;
 		}
-			break;
-		case 2: {
-			switch (j) {
-			case 1: {
-				second = new Choleric(choleric, happy);
-			}
-				break;
-			case 2: {
-				second = new Choleric(choleric, sad);
-			}
-				break;
-			case 3: {
-				second = new Choleric(choleric, kind);
-			}
-				break;
-			case 4: {
-				second = new Choleric(choleric, ang);
-			}
-				break;
-			}
-		}
-			break;
-		case 3: {
-			switch (j) {
-			case 1: {
-				second = new Melancholiac(melancholiac, happy);
-			}
-				break;
-			case 2: {
-				second = new Melancholiac(melancholiac, sad);
-			}
-				break;
-			case 3: {
-				second = new Melancholiac(melancholiac, kind);
-			}
-				break;
-			case 4: {
-				second = new Melancholiac(melancholiac, ang);
-			}
-				break;
-			}
-		}
-			break;
-		case 4: {
-			switch (j) {
-			case 1: {
-				second = new Phlegmatic(phlegmatic, happy);
-			}
-				break;
-			case 2: {
-				second = new Phlegmatic(phlegmatic, sad);
-			}
-				break;
-			case 3: {
-				second = new Phlegmatic(phlegmatic, kind);
-			}
-				break;
-			case 4: {
-				second = new Phlegmatic(phlegmatic, ang);
-			}
-				break;
-			}
-		}
-			break;
-		}
-		Replica welcome = null, phrase = null, question = null, answer = null, finale = null;
-		welcome = new Welcome();
-		phrase = new Phrase();
-		question = new Question();
-		answer = new Answer();
-		finale = new Finale();
-		int type_phrase = 1;
-		welcome.say(type_phrase);
+		
+		Replica phrase_first = null, phrase_second = null;
+
+		hello(first, second, phrase_first, phrase_second);
 
 		while (first.find_max()[1] < 20 && second.find_max()[1] < 20) {
-			phrase(type_phrase, phrase, first, second);
-			question_answer(type_phrase, question, answer, first, second);
-			phrase(type_phrase, phrase, first, second);
+			phrase(first, second, phrase_first, phrase_second);
+			question_answer(first, second, phrase_first, phrase_second);
+			phrase(first, second, phrase_first, phrase_second);
 			// Thread.sleep(5000);
 		}
 		int val = 0;
@@ -290,43 +213,42 @@ public class Run {
 		case 0:
 			System.out
 					.println("В конце концов первый был настолько счастлив, что не выдержал и заявил:");
-			finale.say(1);
 			break;
 		case 1:
 			System.out
 					.println("В конце концов первый ужасно расстроился, и произес:");
-			finale.say(2);
 			break;
 		case 2:
 			System.out
 					.println("В конце концов первый так расчувствовался, что не удержался и как скажет:");
-			finale.say(3);
 			break;
 		case 3:
 			System.out
 					.println("В конце концов первый был ужасно зол. Подведя черту, сквозь зубы он проскрежетал:");
-			finale.say(4);
 			break;
 		case 4:
 			System.out
 					.println("В конце концов второй был настолько счастлив, что не выдержал и заявил:");
-			finale.say(1);
 			break;
 		case 5:
 			System.out
 					.println("В конце концов второй ужасно расстроился, и произес:");
-			finale.say(2);
 			break;
 		case 6:
 			System.out
 					.println("В конце концов второй так расчувствовался, что не удержался и как скажет:");
-			finale.say(3);
 			break;
 		case 7:
 			System.out
 					.println("В конце концов второй был ужасно зол. Подведя черту, сквозь зубы он проскрежетал:");
-			finale.say(4);
 			break;
+		}
+		if (first.find_max()[1] < second.find_max()[1]) {
+			phrase_second = new Finale(4, second.analyzing() - 1, rand_value());
+			phrase_second.say();
+		} else {
+			phrase_first = new Finale(4, first.analyzing() - 1, rand_value());
+			phrase_first.say();
 		}
 	}
 }

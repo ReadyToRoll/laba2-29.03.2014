@@ -10,6 +10,7 @@ public interface Temperament {
 
 class Sanguine implements Temperament {
 	int[] character = new int[6];
+	//
 	int[] statement = new int[4];
 
 	Sanguine(int[] arr, int[] arr2) {
@@ -60,8 +61,8 @@ class Sanguine implements Temperament {
 		if (i < j && kind == false)
 			return 4;
 		if (happy == false && kind == false)
-			return 0;
-		return -1;
+			return 3; // заменить на нейтральность
+		return 3; // и это тоже
 	}
 
 	public void changeStatement(int type) {
@@ -173,8 +174,8 @@ class Choleric implements Temperament {
 		if (i < j && kind == false)
 			return 4;
 		if (happy == false && kind == false)
-			return 0;
-		return -1;
+			return 3;
+		return 3;
 	}
 
 	public void changeStatement(int type) {
@@ -284,8 +285,8 @@ class Melancholiac implements Temperament {
 		if (i < j && kind == false)
 			return 4;
 		if (happy == false && kind == false)
-			return 0;
-		return -1;
+			return 3;
+		return 3;
 	}
 
 	public void changeStatement(int type) {
@@ -395,8 +396,8 @@ class Phlegmatic implements Temperament {
 		if (i < j && kind == false)
 			return 4;
 		if (happy == false && kind == false)
-			return 0;
-		return -1;
+			return 3;
+		return 3;
 	}
 
 	public void changeStatement(int type) {
